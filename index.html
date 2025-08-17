@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="site.title">Abhipray — Sawai Gandharva Festival</title>
+
+  <!-- Bootstrap 5 (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-maroon shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/images/logo.png" alt="Abhipray Logo" class="me-2 logo-img">
+        <span data-i18n="brand">Abhipray</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav.home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="archive.html" data-i18n="nav.archive">Archive</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav.about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="submit.html" data-i18n="nav.submit">Submit Abhipray</a></li>
+
+          <!-- Language switcher -->
+          <li class="nav-item ms-lg-3">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Language switcher">
+              <button class="btn btn-outline-light lang-btn" data-lang="en">EN</button>
+              <button class="btn btn-outline-light lang-btn" data-lang="hi">हिं</button>
+              <button class="btn btn-outline-light lang-btn" data-lang="mr">मा</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero d-flex align-items-center text-center text-light">
+    <div class="container">
+      <h1 class="display-5 fw-bold hero-title" data-i18n="hero.title">
+         Abhipray - Sawai Gandharva Bhimsen Mahotsav
+      </h1>
+      <p class="lead mb-4 hero-sub" data-i18n="hero.subtitle">
+        Preserving memories, and emotions from the heart of Hindustani classical music.
+      </p>
+      <a href="archive.html" class="btn btn-gold btn-lg px-4" data-i18n="hero.cta">Explore Archive</a>
+    </div>
+  </header>
+
+  <!-- About + Contribute cards -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title text-maroon" data-i18n="section.about.title">About the Archive</h3>
+              <p class="card-text" data-i18n="section.about.text">
+                A living collection of handwritten and typed abhiprays spanning two decades, safeguarding cultural memories for future generations.
+              </p>
+              <a href="about.html" class="btn btn-outline-maroon" data-i18n="common.learnMore">Learn more</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title text-maroon" data-i18n="section.contribute.title">Contribute Your Abhipray</h3>
+              <p class="card-text" data-i18n="section.contribute.text">
+                Share your experience of the festival — upload a scan/photo of your handwritten note or submit a typed impression.
+              </p>
+              <a href="submit.html" class="btn btn-outline-maroon" data-i18n="section.contribute.cta">Submit now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Browse by Year -->
+  <section class="py-5 bg-cream-soft">
+    <div class="container">
+      <h3 class="mb-4 text-maroon" data-i18n="section.years.title">Browse by Year (2005—2024)</h3>
+      <div id="yearList" class="d-flex flex-wrap gap-2"></div>
+    </div>
+  </section>
+
+  <!-- Famous Personalities -->
+  <section class="py-5">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="text-maroon mb-0" data-i18n="section.famous.title">Famous Personalities</h3>
+        <a href="archive.html#famous" class="btn btn-outline-maroon btn-sm" data-i18n="common.viewAll">View all</a>
+      </div>
+      <p class="mb-0" data-i18n="section.famous.text">
+        Explore abhiprays by renowned artists, gurus, and dignitaries who blessed the festival.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 bg-maroon text-center text-light">
+    <div class="container small">
+      <div data-i18n="footer.rights">© 2025 Abhipray. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- jQuery + Bootstrap Bundle (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
