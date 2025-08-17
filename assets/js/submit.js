@@ -26,6 +26,7 @@ const submitI18n = {
         "submit.validation.name": "Please provide your full name.",
         "submit.validation.phone": "Please provide a valid phone number.",
         "submit.validation.email": "Please provide a valid email address.",
+        "submit.validation.language": "Please select the language of your abhipray.",
         // Music interests
         "submit.interests.title": "Interests in Music",
         "submit.interests.vocal": "Vocal",
@@ -33,6 +34,12 @@ const submitI18n = {
         "submit.interests.dance": "Dance",
         // Content submission
         "submit.content.title": "Your Abhipray",
+        "submit.content.language.label": "Language of your Abhipray",
+        "submit.content.language.select": "Select Language",
+        "submit.content.language.marathi": "Marathi",
+        "submit.content.language.hindi": "Hindi", 
+        "submit.content.language.english": "English",
+        "submit.content.language.mixed": "Other Language",
         "submit.content.text.label": "Share your experience and thoughts",
         "submit.content.text.placeholder": "Write your experience, memories, or thoughts about the festival in your preferred language (Marathi, Hindi, or English)...",
         "submit.content.text.help": "Write in any language - Marathi, Hindi, or English",
@@ -74,6 +81,7 @@ const submitI18n = {
         "submit.validation.name": "कृपया अपना पूरा नाम दें।",
         "submit.validation.phone": "कृपया एक वैध फोन नंबर दें।",
         "submit.validation.email": "कृपया एक वैध ईमेल पता दें।",
+        "submit.validation.language": "कृपया अपने अभिप्राय की भाषा चुनें।",
         // Music interests
         "submit.interests.title": "संगीत में रुचि",
         "submit.interests.vocal": "गायन",
@@ -81,6 +89,12 @@ const submitI18n = {
         "submit.interests.dance": "नृत्य",
         // Content submission
         "submit.content.title": "आपका अभिप्राय",
+        "submit.content.language.label": "आपके अभिप्राय की भाषा",
+        "submit.content.language.select": "भाषा चुनें",
+        "submit.content.language.marathi": "मराठी",
+        "submit.content.language.hindi": "हिंदी",
+        "submit.content.language.english": "अंग्रेजी", 
+        "submit.content.language.mixed": "अन्य भाषा",
         "submit.content.text.label": "अपने अनुभव और विचार साझा करें",
         "submit.content.text.placeholder": "महोत्सव के बारे में अपने अनुभव, यादें या विचार अपनी पसंदीदा भाषा में लिखें (मराठी, हिंदी या अंग्रेजी)...",
         "submit.content.text.help": "किसी भी भाषा में लिखें - मराठी, हिंदी या अंग्रेजी",
@@ -122,6 +136,7 @@ const submitI18n = {
         "submit.validation.name": "कृपया आपले पूर्ण नाव द्या।",
         "submit.validation.phone": "कृपया वैध फोन नंबर द्या।",
         "submit.validation.email": "कृपया वैध ईमेल पत्ता द्या।",
+        "submit.validation.language": "कृपया तुमच्या अभिप्रायाची भाषा निवडा।",
         // Music interests
         "submit.interests.title": "संगीतात स्वारस्य",
         "submit.interests.vocal": "गायन",
@@ -129,6 +144,12 @@ const submitI18n = {
         "submit.interests.dance": "नृत्य",
         // Content submission
         "submit.content.title": "तुमचा अभिप्राय",
+        "submit.content.language.label": "तुमच्या अभिप्रायाची भाषा",
+        "submit.content.language.select": "भाषा निवडा",
+        "submit.content.language.marathi": "मराठी",
+        "submit.content.language.hindi": "हिंदी",
+        "submit.content.language.english": "इंग्रजी",
+        "submit.content.language.mixed": "इतर भाषा",
         "submit.content.text.label": "तुमचे अनुभव आणि विचार शेअर करा",
         "submit.content.text.placeholder": "महोत्सवाबद्दल तुमचे अनुभव, आठवणी किंवा विचार तुमच्या आवडत्या भाषेत लिहा (मराठी, हिंदी किंवा इंग्रजी)...",
         "submit.content.text.help": "कोणत्याही भाषेत लिहा - मराठी, हिंदी किंवा इंग्रजी",
@@ -206,37 +227,74 @@ function setupPlaceholderBehavior() {
 // ===== Store original switchLanguage function and extend it =====
 let originalSwitchLanguage = null;
 
-// Check if switchLanguage already exists (from main.js)
-if (typeof switchLanguage === 'function') {
-    originalSwitchLanguage = switchLanguage;
-}
-
-// Override/define switchLanguage function
+// Enhanced language switching for submit page
 window.switchLanguage = function(lang) {
-    // Call original function if it exists
-    if (originalSwitchLanguage) {
-        originalSwitchLanguage(lang);
+    // Call main.js switchLanguage if it exists
+    if (typeof window.switchLanguage.original === 'function') {
+        window.switchLanguage.original(lang);
     } else {
         // Basic language switching if main.js is not loaded
         if (!i18n[lang]) return;
         localStorage.setItem("abhipray_lang", lang);
         
-        // Apply translations if the function exists
+        // Apply translations
         if (typeof applyTranslations === 'function') {
             applyTranslations(lang);
+        } else {
+            // Fallback translation application
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                const str = i18n[lang]?.[key];
+                if (typeof str === "string") el.textContent = str;
+            });
         }
         
-        // Set active button if the function exists
+        // Set active button
         if (typeof setActiveLangButton === 'function') {
             setActiveLangButton(lang);
+        } else {
+            // Fallback button highlighting
+            $(".lang-btn").removeClass("active");
+            $(`.lang-btn[data-lang='${lang}']`).addClass("active");
         }
         
         document.title = i18n[lang]["site.title"] || document.title;
+        document.documentElement.lang = lang;
     }
     
     // Update submit page specific placeholders
     updateSubmitPlaceholders(lang);
 };
+
+// ===== Enhanced language initialization =====
+function ensureLanguageConsistency() {
+    const currentLang = localStorage.getItem("abhipray_lang") || "en";
+    
+    // Wait for DOM and main.js to be ready
+    const initLang = () => {
+        // Store original switchLanguage if it exists
+        if (typeof switchLanguage === 'function' && !window.switchLanguage.original) {
+            window.switchLanguage.original = switchLanguage;
+        }
+        
+        // Apply current language
+        if (typeof window.switchLanguage === 'function') {
+            window.switchLanguage(currentLang);
+        }
+        
+        // Setup language button event handlers
+        $(".lang-btn").off("click.submit").on("click.submit", function(){
+            const lang = $(this).data("lang");
+            window.switchLanguage(lang);
+        });
+    };
+    
+    // Try immediate initialization
+    initLang();
+    
+    // Also try after a short delay to ensure main.js is loaded
+    setTimeout(initLang, 50);
+}
 
 // ===== Submission type toggle functionality =====
 function toggleSubmissionType() {
@@ -333,6 +391,13 @@ function validateForm() {
     // Validate content based on submission type
     const textSelected = $("#typeText").is(":checked");
     const imageSelected = $("#typeImage").is(":checked");
+    
+    // Validate abhipray language selection
+    const abhiprayLanguage = $("#abhiprayLanguage").val();
+    if (!abhiprayLanguage) {
+        $("#abhiprayLanguage").addClass("is-invalid");
+        isValid = false;
+    }
 
     if (textSelected) {
         const abhiprayText = $("#abhiprayText").val().trim();
@@ -384,6 +449,9 @@ function handleFormSubmission() {
         });
         formData.append("interests", interests.join(","));
 
+        // Abhipray language
+        formData.append("abhiprayLanguage", $("#abhiprayLanguage").val());
+
         // Submission type and content
         const submissionType = $("input[name='submissionType']:checked").val();
         formData.append("submissionType", submissionType);
@@ -393,7 +461,7 @@ function handleFormSubmission() {
         } else if (submissionType === "image") {
             const fileInput = $("#abhiprayImage")[0];
             if (fileInput.files.length > 0) {
-                formData.append("abhiprayImage", fileInput.files);
+                formData.append("abhiprayImage", fileInput.files[0]);
             }
         }
 
@@ -447,5 +515,11 @@ $(function() {
             $(this).removeClass("is-invalid");
         }
     });
+    
+    // Language selection validation
+    $("#abhiprayLanguage").on("change", function() {
+        if ($(this).val()) {
+            $(this).removeClass("is-invalid");
+        }
+    });
 });
-

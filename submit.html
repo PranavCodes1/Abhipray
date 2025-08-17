@@ -166,6 +166,19 @@
                 <div class="mb-4">
                   <h5 class="text-maroon border-bottom pb-2 mb-3" data-i18n="submit.content.title">Your Abhipray</h5>
                   
+                  <!-- Abhipray Language Selection -->
+                  <div class="mb-3">
+                    <label for="abhiprayLanguage" class="form-label" data-i18n="submit.content.language.label">Language of your Abhipray</label>
+                    <select class="form-select" id="abhiprayLanguage" name="abhiprayLanguage" required>
+                      <option value="" data-i18n="submit.content.language.select">Select Language</option>
+                      <option value="marathi" data-i18n="submit.content.language.marathi">Marathi</option>
+                      <option value="hindi" data-i18n="submit.content.language.hindi">Hindi</option>
+                      <option value="english" data-i18n="submit.content.language.english">English</option>
+                      <option value="mixed" data-i18n="submit.content.language.mixed">Other Language</option>
+                    </select>
+                    <div class="invalid-feedback" data-i18n="submit.validation.language">Please select the language of your abhipray.</div>
+                  </div>
+                  
                   <!-- Text Submission -->
                   <div id="textSubmission">
                     <label for="abhiprayText" class="form-label" data-i18n="submit.content.text.label">Share your experience and thoughts</label>
