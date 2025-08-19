@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="archive.title">Archive — Abhipray</title>
+
+  <!-- Bootstrap 5 (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-maroon shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/images/logo.png" alt="Abhipray Logo" class="me-2 logo-img">
+        <span data-i18n="brand">Abhipray</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav.home">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="archive.html" data-i18n="nav.archive">Archive</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav.about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="submit.html" data-i18n="nav.submit">Submit Abhipray</a></li>
+
+          <!-- Language switcher -->
+          <li class="nav-item ms-lg-3">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Language switcher">
+              <button class="btn btn-outline-light lang-btn" data-lang="en">EN</button>
+              <button class="btn btn-outline-light lang-btn" data-lang="hi">हिं</button>
+              <button class="btn btn-outline-light lang-btn" data-lang="mr">मा</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Archive Header -->
+  <header class="py-5 bg-maroon text-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12 text-center">
+          <h1 class="display-6 fw-bold mb-3" data-i18n="archive.header.title">Abhipray Archive</h1>
+          <p class="lead mb-0" data-i18n="archive.header.subtitle">
+            Journey through two decades of musical memories and heartfelt testimonials from the Sawai Gandharva Bhimsen Mahotsav.
+          </p>
+          <p class="mt-2 opacity-75" data-i18n="archive.header.description">
+            Browse through handwritten and typed testimonials from festival attendees
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter Section -->
+  <section class="py-4 bg-cream-soft border-bottom archive-filter-section">
+    <div class="container">
+      <div class="row align-items-start">
+        <div class="col-lg-8 col-md-7">
+          <h5 class="mb-2 text-maroon" data-i18n="archive.filter.title">Browse by Mahotsav (50th - 70th)</h5>
+          <p class="mb-0 small text-muted" data-i18n="archive.filter.subtitle">
+            Select a festival edition to view abhiprays from that year
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-5 mt-3 mt-md-0">
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-outline-maroon btn-sm filter-btn active" data-filter="all" data-i18n="archive.filter.all">
+                All Mahotsav
+              </button>
+              <select class="form-select form-select-sm" id="mahotsavSelect" style="min-width: 160px;">
+                <option value="all" data-i18n="archive.filter.select_mahotsav">Select Mahotsav</option>
+              </select>
+            </div>
+            <div class="text-center text-md-end">
+              <a href="famous-personalities.html" class="btn btn-gold btn-sm" data-i18n="archive.famous_personalities">
+                Famous Personalities
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Archive Content -->
+  <main class="py-5">
+    <div class="container">
+      
+      <!-- Loading State -->
+      <div id="loadingState" class="text-center py-5">
+        <div class="spinner-border text-maroon" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted" data-i18n="archive.loading">Loading abhiprays...</p>
+      </div>
+
+      <!-- Archive Grid -->
+      <div id="archiveGrid" class="row g-4" style="display: none;">
+        <!-- Abhipray cards will be dynamically inserted here -->
+      </div>
+
+      <!-- No Results State -->
+      <div id="noResults" class="text-center py-5" style="display: none;">
+        <div class="text-muted mb-3">
+          <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
+          </svg>
+        </div>
+        <h4 class="text-maroon" data-i18n="archive.no_results.title">No Abhiprays Found</h4>
+        <p class="text-muted" data-i18n="archive.no_results.message">
+          No abhiprays are available for the selected mahotsav. Try selecting a different year.
+        </p>
+        <button class="btn btn-outline-maroon" onclick="resetFilters()" data-i18n="archive.no_results.reset">
+          Show All Abhiprays
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Archive pagination" class="mt-5" id="paginationContainer" style="display: none;">
+        <ul class="pagination justify-content-center" id="pagination">
+          <!-- Pagination will be dynamically generated -->
+        </ul>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- Abhipray Image Modal -->
+  <div class="modal fade" id="abhiprayModal" tabindex="-1" aria-labelledby="abhiprayModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title text-maroon" id="abhiprayModalLabel" data-i18n="archive.modal.title">Abhipray Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="row">
+            <div class="col-12 text-center">
+              <img id="modalImage" src="" alt="Abhipray" class="img-fluid rounded shadow-sm" style="max-height: 80vh; cursor: zoom-in;" onclick="toggleImageZoom(this)">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="card border-0 bg-light">
+                <div class="card-body py-2">
+                  <div class="row text-center">
+                    <div class="col-md-4">
+                      <small class="text-muted" data-i18n="archive.modal.mahotsav">Mahotsav:</small>
+                      <div id="modalMahotsav" class="fw-semibold"></div>
+                    </div>
+                    <div class="col-md-4">
+                      <small class="text-muted" data-i18n="archive.modal.year">Year:</small>
+                      <div id="modalYear" class="fw-semibold"></div>
+                    </div>
+                    <div class="col-md-4">
+                      <small class="text-muted" data-i18n="archive.modal.id">ID:</small>
+                      <div id="modalId" class="small font-monospace text-muted"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden elements for compatibility -->
+          <div id="modalTextContent" style="display: none;"></div>
+          <div id="modalLanguage" style="display: none;"></div>
+          <div id="modalDate" style="display: none;"></div>
+        </div>
+        <div class="modal-footer border-0 justify-content-center">
+          <button type="button" class="btn btn-outline-maroon" data-bs-dismiss="modal" data-i18n="common.close">Close</button>
+          <a id="modalDownload" href="#" class="btn btn-maroon" download style="display: none;" data-i18n="archive.modal.download">
+            Download Image
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-4 bg-maroon text-center text-light">
+    <div class="container small">
+      <div data-i18n="footer.rights">© 2025 Abhipray. All Rights Reserved.</div>
+      <div class="mt-2">
+        <a href="copyright.html" class="footer-link text-light text-decoration-none" data-i18n="footer.copyright.link">Copyright & Rights</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery + Bootstrap Bundle (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/archive.js"></script>
+</body>
+</html>

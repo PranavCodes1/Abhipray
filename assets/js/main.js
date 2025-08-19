@@ -21,7 +21,8 @@ const i18n = {
     "section.famous.title": "Famous Personalities",
     "section.famous.text": "Explore abhiprays by renowned artists, gurus, and dignitaries who blessed the festival.",
     "common.viewAll": "View all",
-    "footer.rights": "© 2025 Abhipray. All Rights Reserved."
+     "footer.rights": "© 2025 Abhipray. All Rights Reserved.",
+"footer.copyright.link": "Copyright & Rights"
   },
   hi: {
     "site.title": "अभिप्राय — सवाई गंधर्व महोत्सव",
@@ -44,7 +45,8 @@ const i18n = {
     "section.famous.title": "विशिष्ट व्यक्तित्व",
     "section.famous.text": "प्रसिद्ध कलाकारों, गुरुओं और गणमान्य व्यक्तियों के अभिप्राय देखें।",
     "common.viewAll": "सभी देखें",
-    "footer.rights": "© 2025 अभिप्राय। सर्वाधिकार सुरक्षित।"
+     "footer.rights": "© 2025 अभिप्राय। सर्वाधिकार सुरक्षित।",
+"footer.copyright.link": "कॉपीराइट और अधिकार"
   },
   mr: {
     "site.title": "अभिप्राय — सवाई गंधर्व महोत्सव",
@@ -67,8 +69,8 @@ const i18n = {
     "section.famous.title": "प्रसिद्ध व्यक्तिमत्त्वे",
     "section.famous.text": "प्रसिद्ध कलाकार, गुरू व मान्यवरांचे अभिप्राय पहा।",
     "common.viewAll": "सर्व पहा",
-    "footer.rights": "© 2025 अभिप्राय। सर्व हक्क राखीव।"
-  }
+     "footer.rights": "© 2025 अभिप्राय। सर्व हक्क राखीव।", 
+"footer.copyright.link": "कॉपीराइट आणि हक्क" }
 };
 
 // ===== Utility: apply translations to all [data-i18n] =====
@@ -76,7 +78,14 @@ function applyTranslations(lang){
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     const str = i18n[lang]?.[key];
-    if (typeof str === "string") el.textContent = str;
+    if (typeof str === "string") {
+      // Check if the string contains HTML tags
+      if (str.includes('<') && str.includes('>')) {
+        el.innerHTML = str; // Use innerHTML for HTML content
+      } else {
+        el.textContent = str; // Use textContent for plain text
+      }
+    }
   });
   document.documentElement.lang = lang;
 }
@@ -117,7 +126,18 @@ function generateYears(start=2005, end=2024){
   }
 }
 
-// ===== On load =====
+// ===== Set active footer link =====
+function setActiveFooterLink() {
+  const currentPage = window.location.pathname.split('/').pop();
+  
+  $('.footer-link').removeClass('active');
+  
+  if (currentPage === 'copyright.html') {
+    $('.footer-link[href="copyright.html"]').addClass('active');
+  }
+}
+
+// ===== Update the $(function() section =====
 $(function(){
   // Fade in hero texts (jQuery animation)
   $(".hero-title").fadeTo(600, 1);
@@ -132,4 +152,7 @@ $(function(){
   // Init
   initLanguage();
   generateYears(2005, 2024);
+  
+  // Set active footer link
+  setActiveFooterLink();
 });
