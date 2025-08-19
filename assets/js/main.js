@@ -17,7 +17,7 @@ const i18n = {
     "section.contribute.title": "Contribute Your Abhipray",
     "section.contribute.text": "Share your experience of the festival — upload a scan/photo of your handwritten note or submit a typed impression.",
     "section.contribute.cta": "Submit now",
-    "section.years.title": "Browse by Year (2005—2024)",
+    "section.mahotsav.title": "Browse by Mahotsav (50th—70th)",
     "section.famous.title": "Famous Personalities",
     "section.famous.text": "Explore abhiprays by renowned artists, gurus, and dignitaries who blessed the festival.",
     "common.viewAll": "View all",
@@ -41,7 +41,7 @@ const i18n = {
     "section.contribute.title": "अपना अभिप्राय साझा करें",
     "section.contribute.text": "महोत्सव का अपना अनुभव साझा करें — हस्तलिखित नोट का स्कैन/फोटो अपलोड करें या टाइप करके भेजें।",
     "section.contribute.cta": "अभी भेजें",
-    "section.years.title": "वर्ष अनुसार देखें (2005—2024)",
+    "section.mahotsav.title": "महोत्सव के अनुसार ब्राउज़ करें (50वां—70वां)",
     "section.famous.title": "विशिष्ट व्यक्तित्व",
     "section.famous.text": "प्रसिद्ध कलाकारों, गुरुओं और गणमान्य व्यक्तियों के अभिप्राय देखें।",
     "common.viewAll": "सभी देखें",
@@ -65,7 +65,7 @@ const i18n = {
     "section.contribute.title": "आपला अभिप्राय नोंदवा",
     "section.contribute.text": "महोत्सवाचा आपला अनुभव शेअर करा — हस्तलिखित पानाचा स्कॅन/फोटो अपलोड करा किंवा मजकूर पाठवा।",
     "section.contribute.cta": "आताच पाठवा",
-    "section.years.title": "वर्षानुसार पहा (2005—2024)",
+    "section.mahotsav.title": "महोत्सवानुसार ब्राउझ करा (50वा—70वा)",
     "section.famous.title": "प्रसिद्ध व्यक्तिमत्त्वे",
     "section.famous.text": "प्रसिद्ध कलाकार, गुरू व मान्यवरांचे अभिप्राय पहा।",
     "common.viewAll": "सर्व पहा",
@@ -112,20 +112,27 @@ function setActiveLangButton(lang){
   $(`.lang-btn[data-lang='${lang}']`).addClass("active");
 }
 
-// ===== Generate year buttons dynamically (primary org by year) =====
-function generateYears(start=2005, end=2024){
-  const container = document.getElementById("yearList");
+// ===== Generate mahotsav buttons dynamically =====
+function generateMahotsav(start=50, end=70){
+  const container = document.getElementById("mahotsavList");
   if(!container) return;
   container.innerHTML = "";
-  for(let y = start; y <= end; y++){
+  
+  // Mahotsav to year mapping
+  const mahotsavData = {
+    50: 2002, 51: 2003, 52: 2004, 53: 2005, 54: 2006, 55: 2007, 56: 2008, 57: 2009, 58: 2010, 59: 2011,
+    60: 2012, 61: 2013, 62: 2014, 63: 2015, 64: 2016, 65: 2017, 66: 2018, 67: 2019, 68: 2020, 69: 2021, 70: 2022
+  };
+  
+  for(let m = start; m <= end; m++){
     const a = document.createElement("a");
-    a.href = `archive.html?year=${y}`;
-    a.className = "year-btn";
-    a.textContent = y.toString();
+    a.href = `archive.html?mahotsav=${m}`;
+    a.className = "year-btn"; // Keep same CSS class for styling
+    a.textContent = `${m}th`;
+    a.title = `${m}th Mahotsav (${mahotsavData[m]})`;
     container.appendChild(a);
   }
 }
-
 // ===== Set active footer link =====
 function setActiveFooterLink() {
   const currentPage = window.location.pathname.split('/').pop();
@@ -151,8 +158,7 @@ $(function(){
 
   // Init
   initLanguage();
-  generateYears(2005, 2024);
-  
+   generateMahotsav(50, 70); 
   // Set active footer link
   setActiveFooterLink();
 });
